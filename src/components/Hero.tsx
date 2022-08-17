@@ -2,6 +2,7 @@ import {IHero} from '../database/HeroClass';
 import {SFlex} from './styled/SFlex';
 import {SButton} from "./styled/SButton";
 import {useTypedDispatch, useTypedSelector} from "../hooks/redux";
+import { useEffect, useState } from 'react';
 
 interface IProps {
     hero: IHero,
@@ -23,11 +24,13 @@ function Hero({hero, enemy, inBattle}: IProps) {
         })
     }
 
-
     return (
-        <SFlex gap='20px 40px' align='center'>
-            <SFlex gap='10px' direction='column' align={'center'}>
-                <div>{hero.name ? hero.name : 'Anon'}</div>
+        <SFlex gap='10px 40px' direction={'column'} align='center'>
+            <SFlex gap='10px' align='center'>
+                <div>{hero.isDead 
+                    ? (hero.name ? <s>{hero.name}</s> : 'Anon') 
+                    : (hero.name ? hero.name : 'Anon')}
+                </div>
                 <hr style={{width: '100%'}}/>
                 <div>{hero.role}</div>
 
@@ -36,17 +39,19 @@ function Hero({hero, enemy, inBattle}: IProps) {
                     <SButton onClick={(event: MouseEvent) => removeHero(event, hero)}>Delete</SButton>
                 </>}
             </SFlex>
-            <div>
-                <div>HP: {hero.baseParams.hp}</div>
-                <div>Armor: {hero.baseParams.armor}</div>
-                <div>Resistance: {hero.baseParams.resistance}</div>
-                <div>Magic: {hero.baseParams.magic}</div>
-                <div>Power: {hero.baseParams.power}</div>
-                <div>Attack speed: {hero.baseParams.attack_speed}</div>
-            </div>
-            <img width={100} src={hero.photo} alt={`${hero.name}${hero.role}`}
-                 style={{transform: enemy ? 'rotateY(180deg)' : 'rotateY(0deg)'}}
-            />
+            <SFlex gap={'10px'}>
+                <div>
+                    <div>HP: {hero.baseParams.hp}</div>
+                    <div>Armor: {hero.baseParams.armor}</div>
+                    <div>Resistance: {hero.baseParams.resistance}</div>
+                    <div>Magic: {hero.baseParams.magic}</div>
+                    <div>Power: {hero.baseParams.power}</div>
+                    <div>Attack speed: {hero.baseParams.attack_speed}</div>
+                </div>
+                <img width={100} src={hero.photo} alt={`${hero.name}${hero.role}`}
+                    style={{transform: enemy ? 'rotateY(180deg)' : 'rotateY(0deg)'}}
+                />
+            </SFlex>
         </SFlex>
     )
 }

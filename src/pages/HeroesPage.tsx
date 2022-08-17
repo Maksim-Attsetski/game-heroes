@@ -47,7 +47,7 @@ function HeroesPage() {
                 <div>Your heroes</div>
                 <br/>
 
-                <SFlex wrap='wrap' gap='20px 40px'>
+                <SFlex wrap='wrap' gap='20px 40px' justify='space-around'>
                     {userHeroes.map((hero) =>
                         <div key={hero.id}
                              style={{

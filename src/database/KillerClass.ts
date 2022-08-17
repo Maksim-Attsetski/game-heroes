@@ -22,6 +22,14 @@ export class KillerClass extends HeroClass {
       attack_speed: 1.5,
     };
     this.photo = ninjaPhoto;
-    this.defense = super.defense;
+  }
+
+  defense(physical: number, magical: number): void {
+    const damage =
+      physical / this.baseParams.armor + magical / this.baseParams.resistance;
+    this.baseParams.hp = +(this.baseParams.hp - damage).toFixed(1);
+    if (this.baseParams.hp <= 0) {
+      this.isDead = true;
+    }
   }
 }

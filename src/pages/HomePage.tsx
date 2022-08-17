@@ -13,8 +13,8 @@ function HomePage() {
                 <br/>
                 <div>You can made only 5 heroes</div>
                 <div>You create ({userHeroes.length}): </div>
-                <SFlex gap={'10px'} margin={'10px 0'}>{userHeroes.map((hero) =>
-                    <div style={{color: '#5460FE'}}>{hero.name}</div>
+                <SFlex gap={'10px'} margin={'10px 0'}>
+                    {userHeroes.map((hero) => <div key={hero.id} style={{color: '#5460FE'}}>{hero.name}</div>
                 )}</SFlex>
 <hr/>
                 <br/>

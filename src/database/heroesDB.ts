@@ -12,6 +12,7 @@ const killerAsya = new KillerClass('Asya');
 
 const archerStas = new ArcherClass('Stas');
 const archerKolya = new ArcherClass('Kolya');
+console.log(archerKolya);
 
 export const heroes: IHero[] = [
   knightMax,

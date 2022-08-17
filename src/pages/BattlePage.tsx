@@ -9,27 +9,44 @@ import {useTypedDispatch, useTypedSelector} from '../hooks/redux';
 import {filterHeroesOnParse} from '../utils/filterHeroesOnParse';
 
 function BattlePage() {
-    const {heroesToBattle, enemyHeroes} = useTypedSelector(state => state.heroes)
+    const {heroesToBattle, enemyHeroes, userHeroes} = useTypedSelector(state => state.heroes)
     const dispatch = useTypedDispatch()
     const navigate = useNavigate()
     const [selectedHero, setSelectedHero] = useState<IHero | null>(null)
     const [move, setMove] = useState<'hero' | 'enemy'>('hero')
 
     useEffect(() => {
+        if (userHeroes.length === 0) return
+
         if (heroesToBattle.length === 0) {
             const heroesData = localStorage.getItem('heroesToBattle')
             if (heroesData) {
-                const heroes = filterHeroesOnParse(JSON.parse(heroesData)) // если есть герои, то рендерим
+                const heroes = filterHeroesOnParse(userHeroes, JSON.parse(heroesData)) // если есть герои, то рендерим
+
+                // дикий костыль из-за localStorage вместо сервера
+                heroes.forEach((hero) => {
+                    if(hero.defense === undefined) {
+                        hero.defense = function(physical: number, magical: number): void {
+                            const damage =
+                              physical / this.baseParams.armor + magical / this.baseParams.resistance;
+                            this.baseParams.hp = +(this.baseParams.hp - damage).toFixed(1);
+                            if (this.baseParams.hp <= 0) {
+                              this.isDead = true;
+                            } 
+                        }
+                    }
+                })
 
                 dispatch({type: 'setEnemyHeroes', payload: heroes})
                 dispatch({type: 'setHeroesToBattle', payload: heroes})
             } else {
                 navigate(routeNames.HEROES) // иначе возвращаемся на страницу со своими героями
             }
-        } else {
+        } else {            
+            console.log(heroesToBattle);
             dispatch({type: 'setEnemyHeroes', payload: heroesToBattle})
         }
-    }, [])
+    }, [userHeroes])  
 
     const onHeroClick = (hero: IHero) => {
         if (move === 'hero') {
@@ -74,9 +91,9 @@ function BattlePage() {
                 <div>Which move? – {move}</div>
                 <br/><br/>
 
-                <SFlex gap='20px 40px' justify='space-between' align='center' wrap='wrap'>
+                <SFlex gap='20px 40px' align='center' wrap='wrap' justify='space-around'>
                     <div>
-                        <div>my heroes</div>
+                        <h4 style={{textAlign: 'center'}}>My heroes</h4>
                         <br/>
                         <SFlex gap='20px 40px' wrap='wrap' direction='column'>
                             {heroesToBattle.map((hero) =>
@@ -95,7 +112,7 @@ function BattlePage() {
                     </div>
 
                     <div>
-                        <div>enemy</div>
+                        <h4 style={{textAlign: 'center'}}>Enemy</h4>
                         <br/>
                         <SFlex gap='20px 40px' wrap='wrap' direction='column'>
                             {enemyHeroes.map((hero) =>

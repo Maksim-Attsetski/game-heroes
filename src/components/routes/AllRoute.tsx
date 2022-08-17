@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import BattlePage from '../../pages/BattlePage';
 import HeroesPage from '../../pages/HeroesPage';
 import HomePage from '../../pages/HomePage';
@@ -11,10 +11,16 @@ import {useTypedDispatch} from "../../hooks/redux";
 function AllRoute () {
     const {HOME, TASKS, HEROES, BATTLES} = routeNames
     const dispatch = useTypedDispatch()
+    const {pathname} = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch({type: 'getUserHeroes', payload: []})
     }, [])
+
+    useEffect(() => {
+        if(pathname === '/') navigate(HOME)
+    }, [pathname])
 
     return (
         <Routes>
