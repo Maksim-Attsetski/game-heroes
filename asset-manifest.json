@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/game-heroes/static/js/main.cb8f9e2d.js",
+    "main.js": "/game-heroes/static/js/main.8b7be006.js",
     "static/media/archer.png": "/game-heroes/static/media/archer.92d76108f5a8f0317f09.png",
     "static/media/knight.png": "/game-heroes/static/media/knight.2ead6df556a31ec2237e.png",
     "static/media/ninja.png": "/game-heroes/static/media/ninja.bdc893bc011f91a4b7ac.png",
     "index.html": "/game-heroes/index.html",
-    "main.cb8f9e2d.js.map": "/game-heroes/static/js/main.cb8f9e2d.js.map"
+    "main.8b7be006.js.map": "/game-heroes/static/js/main.8b7be006.js.map"
   },
   "entrypoints": [
-    "static/js/main.cb8f9e2d.js"
+    "static/js/main.8b7be006.js"
   ]
 }
