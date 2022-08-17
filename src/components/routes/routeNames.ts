@@ -1,6 +1,6 @@
 export enum routeNames {
-  HOME = '/',
-  TASKS = '/tasks/',
-  HEROES = '/heroes/',
-  BATTLES = '/battle/',
+  HOME = '/game-heroes/',
+  TASKS = '/game-heroes/tasks/',
+  HEROES = '/game-heroes/heroes/',
+  BATTLES = '/game-heroes/battle/',
 }
