@@ -7,7 +7,6 @@ import {STitle} from '../components/styled/STitle';
 import {IHero} from '../database/HeroClass';
 import {useTypedDispatch, useTypedSelector} from '../hooks/redux';
 import {filterHeroesOnParse} from '../utils/filterHeroesOnParse';
-import {SButton} from "../components/styled/SButton";
 
 function BattlePage() {
     const {heroesToBattle, enemyHeroes} = useTypedSelector(state => state.heroes)
