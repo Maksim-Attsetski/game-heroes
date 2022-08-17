@@ -2,6 +2,8 @@ import { IHero } from '../database/HeroClass';
 import { KnightClass } from '../database/KnightClass';
 import { KillerClass } from '../database/KillerClass';
 import { ArcherClass } from '../database/ArcherClass';
+import { WizardClass } from '../database/WizardClass';
+import { MonsterClass } from '../database/MonsterClass';
 
 interface IGetHero {
   (
@@ -20,6 +22,12 @@ export const getHero: IGetHero = (name, role) => {
     }
     case 'Archer': {
       return new ArcherClass(name);
+    }
+    case 'Wizard': {
+      return new WizardClass(name);
+    }
+    case 'Monster': {
+      return new MonsterClass(name);
     }
     default:
       return null;
