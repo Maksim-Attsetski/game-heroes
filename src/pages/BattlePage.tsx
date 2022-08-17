@@ -15,6 +15,9 @@ function BattlePage() {
     const navigate = useNavigate()
     const [selectedHero, setSelectedHero] = useState<IHero | null>(null)
     const [move, setMove] = useState<'hero' | 'enemy'>('hero')
+    const [win, setWin] = useState<{
+        win: boolean, winner: 'hero' | 'enemy' | null
+    }>({win: false, winner: null})
 
     useEffect(() => {
         if (userHeroes.length === 0) return
@@ -64,10 +67,19 @@ function BattlePage() {
         const {power, magic} = selectedHero.baseParams
 
         if (unit.isDead) {
-            alert(`${unit.name} умер`);
-            return;
+            return alert(`${unit.name} умер`);
         }
         unit.defense(power, magic)
+
+        const heroesIsDead = userHeroes.every((hero) => hero.isDead) 
+        const enemyIsDead = enemyHeroes.every((hero) => hero.isDead) 
+
+        if (heroesIsDead || enemyIsDead) {
+            const winner = heroesIsDead ? 'enemy' : 'hero'
+            setWin({win: true, winner })
+
+            return alert(`winner: ${winner}`)
+        }
 
         setSelectedHero(unit)
         setMove(prev => prev === 'enemy' ? 'hero' : 'enemy')
@@ -76,6 +88,14 @@ function BattlePage() {
     return (
         <div>
             <div className="container">
+                {win.win && <SFlex style={{
+                    position: 'absolute', top: '15%', left: '40%',
+                    border: '1px solid #5460FE', padding: 15, borderRadius: 20,
+                }} gap={'10px'} direction='column' align='center'>
+                    <div>Winner: {win.winner}</div>
+                    <div style={{cursor: 'pointer'}} onClick={() => setWin({win: false, winner: null })}>Close</div>
+                </SFlex>}
+
                 <br/>
                 <STitle>BattlePage</STitle>
                 <br/>
