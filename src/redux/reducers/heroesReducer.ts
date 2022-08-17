@@ -50,8 +50,6 @@ export const heroesReducer = (
         ),
       ];
 
-      console.log(action.payload);
-
       localStorage.setItem('heroesToBattle', JSON.stringify(heroesToBattle));
       localStorage.removeItem('enemy');
       return { ...state, heroesToBattle: action.payload };

@@ -39,11 +39,7 @@ function HeroesPage() {
     }
     
     useEffect(() => {
-        const heroes: IHero[] = setFullHp(userHeroes)
-        console.log(heroes);
-
-        
-        dispatch({type: 'setUserHeroes', payload: heroes})
+        dispatch({type: 'setUserHeroes', payload: setFullHp(userHeroes)})
     }, [])
 
     return (

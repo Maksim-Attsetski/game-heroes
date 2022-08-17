@@ -7,6 +7,7 @@ import {STitle} from '../components/styled/STitle';
 import {IHero} from '../database/HeroClass';
 import {useTypedDispatch, useTypedSelector} from '../hooks/redux';
 import {filterHeroesOnParse} from '../utils/filterHeroesOnParse';
+import { setHeroDefenseFunc } from '../utils/setHeroDefenseFunc';
 
 function BattlePage() {
     const {heroesToBattle, enemyHeroes, userHeroes} = useTypedSelector(state => state.heroes)
@@ -23,28 +24,18 @@ function BattlePage() {
             if (heroesData) {
                 const heroes = filterHeroesOnParse(userHeroes, JSON.parse(heroesData)) // если есть герои, то рендерим
 
-                heroes.forEach((hero) => {
-                    if (hero.defense === undefined) {
-                      hero.defense = function (physical: number, magical: number): void {
-                        const damage =
-                          physical / this.baseParams.armor +
-                          magical / this.baseParams.resistance;
-                        this.baseParams.hp = +(this.baseParams.hp - damage).toFixed(1);
-                        if (this.baseParams.hp <= 0) {
-                          this.isDead = true;
-                        }
-                      };
-                    }
-                });
+                const heroesWithDefenseFunc = setHeroDefenseFunc(heroes)
 
-                dispatch({type: 'setEnemyHeroes', payload: heroes})
-                dispatch({type: 'setHeroesToBattle', payload: heroes})
+                dispatch({type: 'setEnemyHeroes', payload: heroesWithDefenseFunc})
+                dispatch({type: 'setHeroesToBattle', payload: heroesWithDefenseFunc})
             } else {
                 navigate(routeNames.HEROES) // иначе возвращаемся на страницу со своими героями
             }
-        } else {            
-            dispatch({type: 'setHeroesToBattle', payload: heroesToBattle})
-            dispatch({type: 'setEnemyHeroes', payload: heroesToBattle})
+        } else {   
+            const heroesWithDefenseFunc = setHeroDefenseFunc(heroesToBattle)
+                     
+            dispatch({type: 'setHeroesToBattle', payload: heroesWithDefenseFunc})
+            dispatch({type: 'setEnemyHeroes', payload: heroesWithDefenseFunc})
         }
     }, [userHeroes])  
 
