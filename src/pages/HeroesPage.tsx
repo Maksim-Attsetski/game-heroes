@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Hero from '../components/Hero';
 import {routeNames} from '../components/routes/routeNames';
@@ -7,6 +7,7 @@ import {SFlex} from '../components/styled/SFlex';
 import {STitle} from '../components/styled/STitle';
 import {IHero} from '../database/HeroClass';
 import {useTypedDispatch, useTypedSelector} from '../hooks/redux';
+import { setFullHp } from '../utils/setFullHP';
 
 function HeroesPage() {
     const {userHeroes} = useTypedSelector(state => state.heroes)
@@ -36,6 +37,14 @@ function HeroesPage() {
         dispatch({type: 'setHeroesToBattle', payload: selectedHeroes})
         navigate(routeNames.BATTLES)
     }
+    
+    useEffect(() => {
+        const heroes: IHero[] = setFullHp(userHeroes)
+        console.log(heroes);
+
+        
+        dispatch({type: 'setUserHeroes', payload: heroes})
+    }, [])
 
     return (
         <div>

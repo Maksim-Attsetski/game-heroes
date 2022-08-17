@@ -17,6 +17,7 @@ export class KnightClass extends HeroClass {
       armor: 8,
       resistance: 7,
       hp: 80,
+      max_hp: 80,
       power: 10,
       magic: 0,
       attack_speed: 1,

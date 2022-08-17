@@ -13,6 +13,7 @@ export interface IHero {
 
 export interface IBaseParam {
   hp: number;
+  max_hp: number;
   attack_speed: number;
   power: number;
   magic: number;

@@ -17,6 +17,7 @@ export class KillerClass extends HeroClass {
       armor: 3,
       resistance: 2,
       hp: 50,
+      max_hp: 50,
       power: 43,
       magic: 19,
       attack_speed: 1.5,

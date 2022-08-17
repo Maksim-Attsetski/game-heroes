@@ -23,19 +23,19 @@ function BattlePage() {
             if (heroesData) {
                 const heroes = filterHeroesOnParse(userHeroes, JSON.parse(heroesData)) // если есть герои, то рендерим
 
-                // дикий костыль из-за localStorage вместо сервера
                 heroes.forEach((hero) => {
-                    if(hero.defense === undefined) {
-                        hero.defense = function(physical: number, magical: number): void {
-                            const damage =
-                              physical / this.baseParams.armor + magical / this.baseParams.resistance;
-                            this.baseParams.hp = +(this.baseParams.hp - damage).toFixed(1);
-                            if (this.baseParams.hp <= 0) {
-                              this.isDead = true;
-                            } 
+                    if (hero.defense === undefined) {
+                      hero.defense = function (physical: number, magical: number): void {
+                        const damage =
+                          physical / this.baseParams.armor +
+                          magical / this.baseParams.resistance;
+                        this.baseParams.hp = +(this.baseParams.hp - damage).toFixed(1);
+                        if (this.baseParams.hp <= 0) {
+                          this.isDead = true;
                         }
+                      };
                     }
-                })
+                });
 
                 dispatch({type: 'setEnemyHeroes', payload: heroes})
                 dispatch({type: 'setHeroesToBattle', payload: heroes})
@@ -43,7 +43,7 @@ function BattlePage() {
                 navigate(routeNames.HEROES) // иначе возвращаемся на страницу со своими героями
             }
         } else {            
-            console.log(heroesToBattle);
+            dispatch({type: 'setHeroesToBattle', payload: heroesToBattle})
             dispatch({type: 'setEnemyHeroes', payload: heroesToBattle})
         }
     }, [userHeroes])  
